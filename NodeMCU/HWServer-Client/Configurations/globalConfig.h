@@ -1,0 +1,1 @@
+#define SerialPortBaudRate 115200
