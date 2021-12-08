@@ -1,69 +1,75 @@
+#include <Arduino.h>
+#ifdef ESP32
+#include <WiFi.h>
+#else
 #include <ESP8266WiFi.h>
-#include "ESPAsyncWebServer.h"
-
-#include <Wire.h>
-
-
-// Set your access point network credentials
-const char* ssid = "WE_B78088";
-const char* password = "k6522162";
+#endif
+#include <ESP8266WebServer.h>
+#include <ArduinoJson.h>
 
 
-AsyncWebServer server(80);
-
-String readTemp() {
-
-}
-
-String readHumi() {
-
-}
-
-String readPres() {
-
-}
+#define LED D0
+#define SPort 115200
+ESP8266WebServer server(80);
 
 void setup() {
-  // Serial port for debugging purposes
-  Serial.begin(115200);
-  Serial.println();
-
-  // Setting the ESP as an access point
-  Serial.print("Setting AP (Access Point)…");
-  // Remove the password parameter, if you want the AP (Access Point) to be open
-  WiFi.softAP(ssid, password);
-
-  IPAddress local_IP(192, 168, 1, 22);
-  IPAddress gateway(192, 168, 1, 1);
-  IPAddress subnet(255, 255, 255, 0);
-  WiFi.mode(WIFI_AP_STA);
-  WiFi.softAPConfig(local_IP, local_IP, subnet);
-
-  IPAddress IP = WiFi.softAPIP();
-
-  Serial.print("AP IP address: ");
-  Serial.println(IP);
-
-  server.on("/temperature", HTTP_GET, [](AsyncWebServerRequest * request) {
-    request->send_P(200, "text/plain", readTemp().c_str());
-  });
-  server.on("/humidity", HTTP_GET, [](AsyncWebServerRequest * request) {
-    request->send_P(200, "text/plain", readHumi().c_str());
-  });
-  server.on("/pressure", HTTP_GET, [](AsyncWebServerRequest * request) {
-    request->send_P(200, "text/plain", readPres().c_str());
-  });
-  server.on("/ping", HTTP_GET, [](AsyncWebServerRequest * request) {
-    request->send_P(200, "text/plain", "pong");
-  });
-
-
-
-  // Start server
-  server.begin();
-  Serial.print("Server started");
+  InitConnection("WE_B78088", "k6522162");
 }
 
 void loop() {
+  server.handleClient();
+}
 
+void InitConnection(char* ssid, char* password)
+{
+  pinMode(LED, OUTPUT);
+  digitalWrite(LED, LOW);
+  Serial.begin(SPort);
+  delay(10);
+
+  IPAddress ip(192, 168, 1, 40);
+  IPAddress dns(192, 168, 1, 1);
+  IPAddress gateway(192, 168, 1, 1);
+  IPAddress subnet(255, 255, 255, 0);
+  WiFi.config(ip, dns, gateway, subnet);
+
+  WiFi.begin(ssid, password);
+
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print("...");
+  }
+  Serial.println("WiFi connected");
+  Serial.println();
+
+  server.on("/", handle_OnConnect);
+  server.on("/ping", handle_ping);
+  server.onNotFound(handle_NotFound);
+
+  server.begin();
+  digitalWrite(LED, HIGH);
+  Serial.println("Web server running.");
+  delay(500);
+
+  Serial.println(WiFi.localIP());
+}
+
+void handle_OnConnect() {
+  server.send(200, "text/html", "connected");
+}
+
+void handle_ping() {
+  StaticJsonDocument<200> ping_ret;
+  String resp;
+  ping_ret["message"] = "pong";
+  serializeJson(ping_ret, resp);
+  server.send(200, "application/json", resp);
+}
+
+void handle_NotFound() {
+  StaticJsonDocument<200> NotFound_ret;
+  String resp;
+  NotFound_ret["message"] = "Not found";
+  serializeJson(NotFound_ret, resp);
+  server.send(404, "application/json", resp);
 }
