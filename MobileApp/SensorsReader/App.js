@@ -6,56 +6,63 @@
  * @flow strict-local
  */
 
-import React,{ useState }  from 'react';
+import React, {useState} from 'react';
 import HelloWorldApp from './components/HelloWorldApp';
+import Login from './components/Login';
+
+import SensorsConnectionValidator from './components/SensorsConnectionValidator';
 import type {Node} from 'react';
 import {
   SafeAreaView,
   ScrollView,
-  StatusBar,
+  StatusBar, 
   StyleSheet,
   Text,
   useColorScheme,
-  View,
+  View, 
   ActivityIndicator,
 } from 'react-native';
 
 import {
   Colors,
   DebugInstructions,
-  Header,
+  Header, 
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-
-
-
-
-
-
-
+const Stack = createNativeStackNavigator();
 
 const App: () => Node = () => {
- 
   return (
     <View style={[styles.container, styles.horizontal]}>
-        <ActivityIndicator />
-      </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Home"
+          component={SensorsConnectionValidator}
+          options={{ title: 'Sensor connection validator' }}
+        />
+        <Stack.Screen name="Login" component={Login} />
+      </Stack.Navigator>
+    </NavigationContainer>
+     
+    </View>
   );
 };
-
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center"
+    justifyContent: 'center',
   },
   horizontal: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    padding: 10
-  }
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 10,
+  },
 });
 
 export default App;
