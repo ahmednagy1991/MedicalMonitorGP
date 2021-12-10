@@ -8,7 +8,7 @@
 
 import React, {useState} from 'react';
 import HelloWorldApp from './components/HelloWorldApp';
-import Login from './components/Login';
+import Register from './components/Register';
 
 import SensorsConnectionValidator from './components/SensorsConnectionValidator';
 import type {Node} from 'react';
@@ -45,7 +45,7 @@ const App: () => Node = () => {
           component={SensorsConnectionValidator}
           options={{ title: 'Sensor connection validator' }}
         />
-        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Register" component={Register} />
       </Stack.Navigator>
     </NavigationContainer>
      

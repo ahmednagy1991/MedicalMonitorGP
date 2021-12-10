@@ -26,17 +26,16 @@ class SensorsConnectionValidator extends Component {
   };
 
   checkSensorConnection() {
-    this.props.navigation.navigate('Login', {name: 'Jane'});
-    // this.setState({modalVisible: true, errorModalVisible: false});
-    // fetch('http://192.168.1.40/ping')
-    //   .then(response => response.json())
-    //   .then(json => {
-    //     this.props.navigation.navigate('Login', {name: 'Jane'});
-    //     this.setState({modalVisible: false, errorModalVisible: false});
-    //   })
-    //   .catch(error => {
-    //     this.setState({modalVisible: false, errorModalVisible: true});
-    //   });
+    this.setState({modalVisible: true, errorModalVisible: false});
+    fetch('http://192.168.1.40/ping')
+      .then(response => response.json())
+      .then(json => {
+        this.props.navigation.navigate('Register', {name: 'Jane'});
+        this.setState({modalVisible: false, errorModalVisible: false});
+      })
+      .catch(error => {
+        this.setState({modalVisible: false, errorModalVisible: true});
+      });
   }
 
   componentDidMount() {
