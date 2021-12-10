@@ -15,46 +15,26 @@ class Register extends Component {
       username: '',
       email: '',
       mobile: '',
-      age: 0,
+      age: '',
     };
   }
 
   componentDidMount() {
-    _retrieveData = async () => {
-      try {
-        const value = await AsyncStorage.getItem('CRED');
-        if (value !== null) {
-          // We have data!!
-          Alert(value);
-          this.props.navigation.navigate('SensorsScreen', {name: 'Jane'});
-        }
-      } catch (error) {
-        // Error retrieving data
+    //AsyncStorage.removeItem('CRED');
+    AsyncStorage.getItem('CRED', (err, result) => {
+      if (result !== null) {
+         this.props.navigation.navigate('SensorsScreen');
       }
-    };
+    });
   }
 
   onLogin() {
     const {id, username, email, mobile, age} = this.state;
-    _storeData = async () => {
-      try {
-        await AsyncStorage.setItem(
-          'CRED',
-          'id:' +
-            id +
-            'username:' +
-            username +
-            'email:' +
-            email +
-            'mobile:' +
-            mobile +
-            'age:' +
-            age,
-        );
-      } catch (error) {
-        // Error saving data
-      }
-    };
+
+    AsyncStorage.setItem('CRED', JSON.stringify(this.state), () => {
+      this.props.navigation.navigate('SensorsScreen');
+    });
+  
   }
 
   render() {
@@ -62,7 +42,7 @@ class Register extends Component {
       <View style={[styles.container]}>
         <View style={[s.formGroup, {width: '100%'}]}>
           <Text style={[s.text, s.title]} for="username">
-            username :
+            Username :
           </Text>
           <TextInput
             value={this.state.username}
@@ -75,20 +55,20 @@ class Register extends Component {
 
         <View style={[s.formGroup, {width: '100%'}]}>
           <Text style={[s.text, s.title]} for="username">
-            age :
+            Age :
           </Text>
           <TextInput
             value={this.state.age}
             onChangeText={age => this.setState({age})}
             placeholder={'age'}
-            keyboardType='numeric'
+            keyboardType="numeric"
             style={[s.formControl]}
           />
         </View>
 
         <View style={[s.formGroup, {width: '100%'}]}>
           <Text style={[s.text, s.title]} for="username">
-            email :
+            Email :
           </Text>
           <TextInput
             value={this.state.email}
@@ -100,7 +80,7 @@ class Register extends Component {
 
         <View style={[s.formGroup, {width: '100%'}]}>
           <Text style={[s.text, s.title]} for="username">
-            mobile :
+            Mobile :
           </Text>
           <TextInput
             value={this.state.mobile}

@@ -13,12 +13,9 @@
 #define HttpError 400
 #define HttpInternalServerError 500
 
-
 #include "../Configurations/httpConfig.h";
 #include "Sensors/heartRateSensor.h";
 #include "Sensors/TempratureSensor.h";
-
-
 
 ESP8266WebServer server(80);
 HTTPClient http;
@@ -34,6 +31,19 @@ void handle_ping()
   StaticJsonDocument<200> ping_ret;
   String resp;
   ping_ret["message"] = "pong";
+  serializeJson(ping_ret, resp);
+  server.send(HttpSuccess, "application/json", resp);
+}
+
+void handle_getSensors()
+{
+  StaticJsonDocument<200> ping_ret;
+  String resp;
+  JsonArray array = ping_ret.to<JsonArray>();
+
+  char json[] = "[{\"value\":\"HeartRate\",\"label\":\"HeartRate\",\"checked\":false},{\"value\":\"Temprature\",\"label\":\"Temprature\",\"checked\":false}]";
+  deserializeJson(ping_ret, json);
+
   serializeJson(ping_ret, resp);
   server.send(HttpSuccess, "application/json", resp);
 }
@@ -94,7 +104,7 @@ void handle_readSensors()
       sen_ret["Temprature"] = ReadTemprature();
     }
   }
-  
+
   serializeJson(sen_ret, resp);
   server.send(HttpSuccess, "application/json", resp);
 }
@@ -123,6 +133,7 @@ void InitConnection()
   server.on("/", handle_OnConnect);
   server.on("/ping", handle_ping);
   server.on("/location", handle_location);
+  server.on("/getSensors", handle_getSensors);
   server.on("/readSensors", HTTP_POST, handle_readSensors);
   server.onNotFound(handle_NotFound);
 

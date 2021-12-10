@@ -15,8 +15,13 @@
     "react": "17.0.2",
     "react-native": "0.66.3",
     "react-native-bootstrap-styles": "^4.5.0-r",
+    "react-native-check-box": "^2.1.7",
+    "react-native-checkbox-group": "^1.0.3",
+    "react-native-multiple-select": "^0.5.7",
     "react-native-safe-area-context": "^3.3.2",
-    "react-native-screens": "^3.10.1"
+    "react-native-screens": "^3.10.1",
+    "react-native-sectioned-multi-select": "^0.8.1",
+    "react-native-vector-icons": "^9.0.0"
   },
   "devDependencies": {
     "@babel/core": "7.16.0",
