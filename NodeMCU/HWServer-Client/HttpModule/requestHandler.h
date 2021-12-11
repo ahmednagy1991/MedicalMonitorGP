@@ -97,7 +97,7 @@ void handle_readSensors()
   {
     if (value == "HeartRate")
     {
-      sen_ret["HeartRate"] = ReadHeartRat();
+      sen_ret["HeartRate"] = ReadHeartRate();
     }
     else if (value == "Temprature")
     {

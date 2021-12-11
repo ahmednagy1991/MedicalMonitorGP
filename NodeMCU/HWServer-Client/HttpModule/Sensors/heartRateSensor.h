@@ -1,4 +1,4 @@
 
-double ReadHeartRat() {
+double ReadHeartRate() {
     return 15;
 }
