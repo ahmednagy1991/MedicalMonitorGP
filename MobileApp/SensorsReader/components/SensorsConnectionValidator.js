@@ -10,6 +10,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {withNavigation} from 'react-navigation';
+import {AsyncStorage} from 'react-native';
 
 class SensorsConnectionValidator extends Component {
   state = {
@@ -30,7 +31,14 @@ class SensorsConnectionValidator extends Component {
     fetch('http://192.168.1.40/ping')
       .then(response => response.json())
       .then(json => {
-        this.props.navigation.navigate('Register', {name: 'Jane'});
+        AsyncStorage.getItem('CRED', (err, result) => {
+          if (result !== null) {
+            this.props.navigation.navigate('SensorsScreen');
+          } else {
+            this.props.navigation.navigate('Register');
+          }
+        });
+
         this.setState({modalVisible: false, errorModalVisible: false});
       })
       .catch(error => {
@@ -134,4 +142,3 @@ const styles = StyleSheet.create({
 });
 
 export default SensorsConnectionValidator;
-
