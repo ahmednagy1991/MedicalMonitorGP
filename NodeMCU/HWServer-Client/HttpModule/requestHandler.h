@@ -1,4 +1,4 @@
-#include <Arduino.h>
+
 #ifdef ESP32
 #include <WiFi.h>
 #else
@@ -8,10 +8,22 @@
 #include <ESP8266HTTPClient.h>
 #include <ArduinoJson.h>
 
+//yousef code
+//  #include <ArduinoSort.h>
+//  #include <Adafruit_GFX.h>        //OLED libraries
+//  #include <Adafruit_SSD1306.h>
+//  #include "MAX30105.h"           //MAX3010x library
+//  #include "heartRate.h"          //Heart rate calculating algorithm
+
+
+
 #define HttpSuccess 200
 #define HttpNotFound 401
 #define HttpError 400
 #define HttpInternalServerError 500
+
+
+
 
 #include "../Configurations/httpConfig.h";
 #include "Sensors/heartRateSensor.h";
@@ -97,11 +109,12 @@ void handle_readSensors()
   {
     if (value == "HeartRate")
     {
-      sen_ret["HeartRate"] = ReadHeartRate();
+       sen_ret["HeartRate"] = ReadHeartRate();
+     
     }
     else if (value == "Temprature")
     {
-      sen_ret["Temprature"] = ReadTemprature();
+      sen_ret["Temprature"] = ReadTemprature();  
     }
   }
 
