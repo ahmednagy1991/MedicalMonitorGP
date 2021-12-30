@@ -125,4 +125,14 @@ namespace MedicalAdminWebApp.Models
         [Display(Name = "Email")]
         public string Email { get; set; }
     }
+
+    public class UsersAccountsModel
+    {
+        public string Id { get; set; }
+        public string Email { get; set; }
+        public string Mobile { get; set; }
+        public string Username { get; set; }
+    }
+
+
 }

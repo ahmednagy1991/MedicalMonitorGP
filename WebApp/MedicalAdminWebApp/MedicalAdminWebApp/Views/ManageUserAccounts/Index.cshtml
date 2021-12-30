@@ -1,0 +1,46 @@
+﻿@model MedicalAdminWebApp.ViewModels.UsersAccountsViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.ActiveClass = "active";
+}
+
+
+<div class="table-responsive  mt-1">
+    <table class="table select-table">
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>Username</th>
+                <th>Mobile</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var usr in Model.Accounts)
+            {
+                <tr>
+                    <td>
+                        <div class="d-flex ">
+                            <img src="~/Template/images/faces/face1.jpg" alt="">
+                            <div>
+                                <h6>@usr.Email</h6>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <h6>@usr.Username</h6>
+
+                    </td>
+                    <td>
+                        <h6>@usr.Mobile</h6>
+
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Approve","ManageUserAccounts",new { usid = usr.Id })" class="btn btn-sm btn-success" type="button">Approve</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

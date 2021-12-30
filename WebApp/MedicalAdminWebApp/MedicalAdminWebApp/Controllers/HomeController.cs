@@ -6,12 +6,25 @@ using System.Web.Mvc;
 
 namespace MedicalAdminWebApp.Controllers
 {
+   
     public class HomeController : Controller
     {
         public ActionResult Index()
         {
             return View();
         }
+
+        public ActionResult Doctor()
+        {
+            return View();
+        }
+
+        public ActionResult Client()
+        {
+            return View();
+        }
+
+
 
         public ActionResult About()
         {
