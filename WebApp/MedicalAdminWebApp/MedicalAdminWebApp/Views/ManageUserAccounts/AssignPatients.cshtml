@@ -1,0 +1,37 @@
+﻿@model MedicalAdminWebApp.ViewModels.AssignPatientViewModel
+
+@{
+    ViewBag.Title = "AssignPatients";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.AssignPatient = "active";
+}
+
+<h2>AssignPatients</h2>
+<div class="mt-1">
+
+    @using (Html.BeginForm("AssignPatients", "ManageUserAccounts", FormMethod.Post, new { }))
+    {
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label>Patiens</label>
+                @Html.DropDownListFor(m => m.SelectedPatient, Model.patientList,"Select Patient", new { @class = "form-control" })
+            </div>
+
+
+            <div class="form-group col-md-6">
+                <label>Doctor</label>
+                @Html.DropDownListFor(m => m.SelectedDoctor, Model.doctorList,"SelectDotor", new { @class = "form-control" })
+            </div>
+
+            <div class="col-md-4">
+                <button class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    }
+
+
+
+
+</div>
+
+

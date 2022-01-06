@@ -48,10 +48,14 @@ namespace MedicalAdminWebApp.Models
 
     public class LoginViewModel
     {
-        [Required]
+        //[Required]
         [Display(Name = "Email")]
         [EmailAddress]
         public string Email { get; set; }
+
+        [Required]
+        [Display(Name = "Username")]
+        public string Username { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
@@ -95,6 +99,9 @@ namespace MedicalAdminWebApp.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        public List<System.Web.Mvc.SelectListItem> roles { get; set; }
+        public string selectedRole { get; set; }
     }
 
     public class ResetPasswordViewModel

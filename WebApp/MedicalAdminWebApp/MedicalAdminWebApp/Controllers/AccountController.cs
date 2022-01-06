@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using MedicalAdminWebApp.Models;
+using MedicalAdminWebApp.DBContext;
 
 namespace MedicalAdminWebApp.Controllers
 {
@@ -72,16 +73,16 @@ namespace MedicalAdminWebApp.Controllers
             {
                 return View(model);
             }
-            var user = UserManager.FindByEmail(model.Email);
+            var user = UserManager.FindByName(model.Username);
             if (user != null)
             {
-                if (!await UserManager.IsEmailConfirmedAsync(user.Id)) 
+                if (!await UserManager.IsEmailConfirmedAsync(user.Id))
                     return View("ErrorNotConfirmed");
             }
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -145,7 +146,16 @@ namespace MedicalAdminWebApp.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
+            var model = new RegisterViewModel();
+            using (var db = new MedicalMonitoringDBEntities())
+            {
+                model.roles = db.AspNetRoles.Where(m=>m.Name!="Admin").Select(s => new SelectListItem()
+                {
+                    Text = s.Name,
+                    Value = s.Name
+                }).ToList();
+            }
+            return View(model);
         }
 
         //
@@ -157,14 +167,19 @@ namespace MedicalAdminWebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { 
+                var user = new ApplicationUser
+                {
                     UserName = model.Username,
                     Email = model.Email,
-                    PhoneNumber=model.Mobile, 
+                    PhoneNumber = model.Mobile,
                 };
+
                 var result = await UserManager.CreateAsync(user, model.Password);
+
                 if (result.Succeeded)
                 {
+
+                    UserManager.AddToRole(user.Id, model.selectedRole);
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771

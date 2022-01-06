@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace MedicalAdminWebApp.Controllers
 {
-   
+    [Authorize(Roles = "Admin,Doctor,Patient")]
     public class HomeController : Controller
     {
         public ActionResult Index()
