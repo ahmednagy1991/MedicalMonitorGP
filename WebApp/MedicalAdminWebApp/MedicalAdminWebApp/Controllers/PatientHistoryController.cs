@@ -46,5 +46,18 @@ namespace MedicalAdminWebApp.Controllers
             }
             return View(model);
         }
+
+        public ActionResult AdminView()
+        {
+            var model = new HistoryViewModel();
+            using (var db = new MedicalMonitoringDBEntities())
+            {
+                var user_id = User.Identity.GetUserId();
+                model.readingList = db.SensorsReadings
+                     .Include("AspNetUser")
+                     .ToList();
+            }
+            return View(model);
+        }
     }
 }

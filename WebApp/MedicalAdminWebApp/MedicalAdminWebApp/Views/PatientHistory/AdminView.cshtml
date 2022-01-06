@@ -1,0 +1,44 @@
+﻿@model MedicalAdminWebApp.ViewModels.HistoryViewModel
+
+@{
+    ViewBag.Title = "AdminView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="table-responsive  mt-1">
+    <table class="table select-table">
+        <thead>
+            <tr>
+                <th>Patient Name</th>
+                <th>Heartrate</th>
+                <th>Temprature</th>
+                <th>Date/Time</th>
+                <th>Location</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var usr in Model.readingList)
+            {
+                <tr>
+                    <td>
+                        <h6>@usr.AspNetUser.UserName</h6>
+                    </td>
+                    <td>
+                        <h6>@usr.HR</h6>
+                    </td>
+                    <td>
+                        <h6>@usr.Temprature</h6>
+                    </td>
+                    <td>
+                        <h6>@usr.ReadingDate.Value.ToString()</h6>
+                    </td>
+                    <td>
+                        <h6>@usr.Latitude , @usr.Longitude</h6>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+

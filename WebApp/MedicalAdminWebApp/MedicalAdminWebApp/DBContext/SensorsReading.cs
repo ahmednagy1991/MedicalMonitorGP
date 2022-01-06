@@ -17,8 +17,8 @@ namespace MedicalAdminWebApp.DBContext
         public long Id { get; set; }
         public string FK_PatientId { get; set; }
         public Nullable<System.DateTime> ReadingDate { get; set; }
-        public string Latitude { get; set; }
-        public string Longitude { get; set; }
+        public Nullable<double> Latitude { get; set; }
+        public Nullable<double> Longitude { get; set; }
         public Nullable<double> HR { get; set; }
         public Nullable<double> Temprature { get; set; }
     

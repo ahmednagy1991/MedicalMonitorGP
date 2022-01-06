@@ -310,6 +310,12 @@
                                 <span class="menu-title">Patients Accounts</span>
                             </a>
                         </li>
+                        <li class="nav-item @ViewBag.AssignPatient">
+                            <a class="nav-link" href="@Url.Action("AdminView","PatientHistory")">
+                                <i class="menu-icon mdi mdi-history"></i>
+                                <span class="menu-title">Patients History</span>
+                            </a>
+                        </li>
                     }
                     @if (User.Identity.IsAuthenticated && User.IsInRole("Doctor"))
                     {
