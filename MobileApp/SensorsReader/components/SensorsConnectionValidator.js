@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import {withNavigation} from 'react-navigation';
 import {AsyncStorage} from 'react-native';
+import { PermissionsAndroid } from 'react-native';
 
 class SensorsConnectionValidator extends Component {
   state = {

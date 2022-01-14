@@ -15,6 +15,10 @@ import BootstrapStyleSheet from 'react-native-bootstrap-styles';
 const bootstrapStyleSheet = new BootstrapStyleSheet();
 const {s, c} = bootstrapStyleSheet;
 import {AsyncStorage} from 'react-native';
+
+
+
+
 class SensorsScreen extends Component {
   state = {
     sensors: [],
@@ -48,12 +52,38 @@ class SensorsScreen extends Component {
       },
       body: JSON.stringify({sensors: body_obj}),
     })
-      .then(response => response.json())
+      .then(response => response.json()) 
       .then(json => {
         this.setState({
           modalVisible: false,
           sensorsValues: JSON.stringify(json),
         });
+
+ AsyncStorage.getItem('CRED', (err, result) => {
+      if (result !== null) {
+        var sen_obj=JSON.parse(this.state.sensorsValues);
+        var ob=JSON.parse(result);
+        fetch('http://95.111.240.80/ionia/api/DeviceOperations/ReadSensors', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({FK_PatientId:ob.id,Latitude:0.00050,Longitude:0.00050,HR:sen_obj.HeartRate,Temprature:sen_obj.Temprature}),
+    })
+      .then(response => response.json())
+      .then(json => {
+       
+      })
+      .catch(error => {
+       
+      });
+      }
+    });
+
+        
+
+
         //call api here
         //this.props.navigation.navigate('Register', {name: 'Jane'});
         //this.setState({modalVisible: false, errorModalVisible: false});
@@ -65,10 +95,29 @@ class SensorsScreen extends Component {
   }
 
   componentDidMount() {
-    AsyncStorage.removeItem('CRED');
+  //   requestLocationPermission()
+  //  //AsyncStorage.removeItem('CRED');
+  //  this.watchID = navigator.geolocation.watchPosition((position) => {
+  //     // Create the object to update this.state.mapRegion through the onRegionChange function
+  //     let region = {
+  //       latitude:       position.coords.latitude,
+  //       longitude:      position.coords.longitude,
+  //       latitudeDelta:  0.00922*1.5,
+  //       longitudeDelta: 0.00421*1.5
+  //     }
+  //     this.onRegionChange(region, region.latitude, region.longitude);
+  //   }, (error)=>console.log(error));
     this.getSensors();
-  }
 
+  }
+ onRegionChange(region, lastLat, lastLong) {
+    this.setState({
+      mapRegion: region,
+      // If there are no new values set the current ones
+      lastLat: lastLat || this.state.lastLat,
+      lastLong: lastLong || this.state.lastLong
+    });
+  }
   render() {
     const {sensors, modalVisible, sensorsValues} = this.state;
 

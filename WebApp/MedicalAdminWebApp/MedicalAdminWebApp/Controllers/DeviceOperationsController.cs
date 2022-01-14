@@ -69,7 +69,7 @@ namespace MedicalAdminWebApp.Controllers
             if (result.Succeeded)
             {
                 UserManager.AddToRole(user.Id, "Patient");
-                SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                //SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
             }
             else
             {
@@ -79,25 +79,26 @@ namespace MedicalAdminWebApp.Controllers
             return Ok(user.Id);
         }
 
-        [HttpGet]
-        public string ReadSensors(string userId, long latitude, long longitude, double HR, double Temp)
+        [HttpPost]
+        public IHttpActionResult ReadSensors(SensorsReading model)
         {
             using (var db = new MedicalMonitoringDBEntities())
             {
-                var model = new SensorsReading()
-                {
-                    FK_PatientId = userId,
-                    Latitude = latitude,
-                    Longitude = longitude,
-                    HR = HR,
-                    Temprature = Temp,
-                    ReadingDate = DateTime.Now,
-                };
+                //var model = new SensorsReading()
+                //{
+                //    FK_PatientId = userId,
+                //    Latitude = latitude,
+                //    Longitude = longitude,
+                //    HR = HR,
+                //    Temprature = Temp,
+                //    ReadingDate = DateTime.Now,
+                //};
+                model.ReadingDate = DateTime.Now;
                 db.SensorsReadings.Add(model);
                 db.SaveChanges();
             }
 
-            return "Done";
+            return Ok("Done");
         }
 
 

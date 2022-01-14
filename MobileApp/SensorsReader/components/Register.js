@@ -31,7 +31,7 @@ class Register extends Component {
   onLogin() {
     const {id, username, email, mobile, age} = this.state;
  
-    fetch('http://192.168.1.9/api/DeviceOperations/RegisterPatient', {
+    fetch('http://95.111.240.80/ionia/api/DeviceOperations/RegisterPatient', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -43,8 +43,10 @@ class Register extends Component {
         PhoneNumber: mobile,
         Age: age,
       }),
-    }).then(res => {
-          alert(res)
+    })
+    .then(response => response.json())
+    .then(res => {
+      
       this.setState({id: res});
       AsyncStorage.setItem('CRED', JSON.stringify(this.state), () => {
         this.props.navigation.navigate('SensorsScreen');
