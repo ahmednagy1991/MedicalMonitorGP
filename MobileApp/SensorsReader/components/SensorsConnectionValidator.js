@@ -47,6 +47,7 @@ class SensorsConnectionValidator extends Component {
   }
 
   componentDidMount() {
+   
     this.checkSensorConnection();
   }
 

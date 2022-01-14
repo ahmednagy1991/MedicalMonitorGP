@@ -102,6 +102,7 @@ namespace MedicalAdminWebApp.Models
 
         public List<System.Web.Mvc.SelectListItem> roles { get; set; }
         public string selectedRole { get; set; }
+        public int age { get; set; }
     }
 
     public class ResetPasswordViewModel

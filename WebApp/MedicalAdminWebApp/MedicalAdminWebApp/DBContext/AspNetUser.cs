@@ -37,6 +37,7 @@ namespace MedicalAdminWebApp.DBContext
         public int AccessFailedCount { get; set; }
         public string UserName { get; set; }
         public string FK_ParentId { get; set; }
+        public Nullable<int> Age { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetUserClaim> AspNetUserClaims { get; set; }

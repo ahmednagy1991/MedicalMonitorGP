@@ -19,22 +19,37 @@ class Register extends Component {
     };
   }
 
-  componentDidMount() {
+  componentDidMount() { 
     //AsyncStorage.removeItem('CRED');
     AsyncStorage.getItem('CRED', (err, result) => {
       if (result !== null) {
-         this.props.navigation.navigate('SensorsScreen');
+        this.props.navigation.navigate('SensorsScreen');
       }
     });
   }
 
   onLogin() {
     const {id, username, email, mobile, age} = this.state;
-
-    AsyncStorage.setItem('CRED', JSON.stringify(this.state), () => {
-      this.props.navigation.navigate('SensorsScreen');
+ 
+    fetch('http://192.168.1.9/api/DeviceOperations/RegisterPatient', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        UserName: username,
+        Email: email,
+        PhoneNumber: mobile,
+        Age: age,
+      }),
+    }).then(res => {
+          alert(res)
+      this.setState({id: res});
+      AsyncStorage.setItem('CRED', JSON.stringify(this.state), () => {
+        this.props.navigation.navigate('SensorsScreen');
+      });
     });
-  
   }
 
   render() {

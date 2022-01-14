@@ -14,7 +14,7 @@ import CheckBox from 'react-native-check-box';
 import BootstrapStyleSheet from 'react-native-bootstrap-styles';
 const bootstrapStyleSheet = new BootstrapStyleSheet();
 const {s, c} = bootstrapStyleSheet;
-
+import {AsyncStorage} from 'react-native';
 class SensorsScreen extends Component {
   state = {
     sensors: [],
@@ -54,6 +54,7 @@ class SensorsScreen extends Component {
           modalVisible: false,
           sensorsValues: JSON.stringify(json),
         });
+        //call api here
         //this.props.navigation.navigate('Register', {name: 'Jane'});
         //this.setState({modalVisible: false, errorModalVisible: false});
       })
@@ -64,6 +65,7 @@ class SensorsScreen extends Component {
   }
 
   componentDidMount() {
+    AsyncStorage.removeItem('CRED');
     this.getSensors();
   }
 

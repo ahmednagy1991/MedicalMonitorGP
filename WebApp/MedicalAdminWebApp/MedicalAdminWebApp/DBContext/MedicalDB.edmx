@@ -56,6 +56,7 @@
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="FK_ParentId" Type="nvarchar" MaxLength="128" />
+          <Property Name="Age" Type="int" />
         </EntityType>
         <EntityType Name="SensorsReadings">
           <Key>
@@ -270,6 +271,7 @@
           <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
           <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="FK_ParentId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Age" Type="Int32" />
           <NavigationProperty Name="AspNetUserClaims" Relationship="MedicalMonitoringDBModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserClaim" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="MedicalMonitoringDBModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserLogin" />
           <NavigationProperty Name="AspNetUsers1" Relationship="MedicalMonitoringDBModel.FK_AspNetUsers_AspNetUsers" FromRole="AspNetUser" ToRole="AspNetUser1" />
@@ -392,6 +394,7 @@
           <EntitySetMapping Name="AspNetUsers">
             <EntityTypeMapping TypeName="MedicalMonitoringDBModel.AspNetUser">
               <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="Age" ColumnName="Age" />
                 <ScalarProperty Name="FK_ParentId" ColumnName="FK_ParentId" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />

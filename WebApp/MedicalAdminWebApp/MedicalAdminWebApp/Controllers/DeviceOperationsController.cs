@@ -44,14 +44,24 @@ namespace MedicalAdminWebApp.Controllers
         }
 
 
-        [HttpPost]
-        public string RegisterPatient(RegisterViewModel model)
+        [HttpGet]
+        public string Ping()
         {
+            return "Pong";
+        }
+
+
+
+        [HttpPost]
+        public IHttpActionResult RegisterPatient(RegisterViewModel model)
+        {
+            model.Password = "Dev1991@";
             var user = new ApplicationUser
             {
                 UserName = model.Username,
                 Email = model.Email,
                 PhoneNumber = model.Mobile,
+                Age = model.age
             };
 
             var result = UserManager.Create(user, model.Password);
@@ -61,9 +71,14 @@ namespace MedicalAdminWebApp.Controllers
                 UserManager.AddToRole(user.Id, "Patient");
                 SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
             }
+            else
+            {
+                return Content(HttpStatusCode.BadRequest, "Error occuerd contact admin");
+            }
 
-            return user.Id;
+            return Ok(user.Id);
         }
+
         [HttpGet]
         public string ReadSensors(string userId, long latitude, long longitude, double HR, double Temp)
         {
@@ -76,8 +91,7 @@ namespace MedicalAdminWebApp.Controllers
                     Longitude = longitude,
                     HR = HR,
                     Temprature = Temp,
-                    ReadingDate=DateTime.Now
-
+                    ReadingDate = DateTime.Now,
                 };
                 db.SensorsReadings.Add(model);
                 db.SaveChanges();
