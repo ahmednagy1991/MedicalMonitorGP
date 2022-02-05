@@ -64,8 +64,7 @@ class SensorsScreen extends Component {
           if (result !== null) {
             var sen_obj = JSON.parse(this.state.sensorsValues);
             var ob = JSON.parse(result);
-            fetch(
-              'http://95.111.240.80/ionia/api/DeviceOperations/ReadSensors',
+            fetch('http://95.111.240.80/ionia/api/DeviceOperations/ReadSensors',
               {
                 method: 'POST',
                 headers: {
