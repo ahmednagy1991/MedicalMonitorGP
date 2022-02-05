@@ -12,6 +12,8 @@
                 <th>Patient Name</th>
                 <th>Heartrate</th>
                 <th>Temprature</th>
+                <th>SPO2</th>
+                <th>BS</th>
                 <th>Date/Time</th>
                 <th>Location</th>
             </tr>
@@ -19,23 +21,29 @@
         <tbody>
             @foreach (var usr in Model.readingList)
             {
-                <tr>
-                    <td>
-                        <h6>@usr.AspNetUser.UserName</h6>
-                    </td>
-                    <td>
-                        <h6>@usr.HR</h6>
-                    </td>
-                    <td>
-                        <h6>@usr.Temprature</h6>
-                    </td>
-                    <td>
-                        <h6>@usr.ReadingDate.Value.ToString()</h6>
-                    </td>
-                    <td>
-                        <h6>@usr.Latitude , @usr.Longitude</h6>
-                    </td>
-                </tr>
+            <tr>
+                <td>
+                    <h6>@usr.AspNetUser.UserName</h6>
+                </td>
+                <td>
+                    <h6>@usr.HR</h6>
+                </td>
+                <td>
+                    <h6>@usr.Temprature</h6>
+                </td>
+                <td>
+                    <h6>@usr.SPO2</h6>
+                </td>
+                <td>
+                    <h6>@usr.BS</h6>
+                </td>
+                <td>
+                    <h6>@usr.ReadingDate.Value.ToString()</h6>
+                </td>
+                <td>
+                    <h6>@usr.Latitude , @usr.Longitude</h6>
+                </td>
+            </tr>
             }
         </tbody>
     </table>

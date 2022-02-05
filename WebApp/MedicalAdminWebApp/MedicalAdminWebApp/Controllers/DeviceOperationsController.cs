@@ -10,6 +10,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using System.Web;
+using System.Net.Mail;
+using System.Configuration;
 
 namespace MedicalAdminWebApp.Controllers
 {
@@ -97,7 +99,30 @@ namespace MedicalAdminWebApp.Controllers
                 db.SensorsReadings.Add(model);
                 db.SaveChanges();
             }
+            return Ok("Done");
+        }
 
+
+        [HttpGet]
+        public IHttpActionResult Emergency(string PateintId)
+        {
+            using (var db = new MedicalMonitoringDBEntities())
+            {
+                var pateint = db.AspNetUsers.FirstOrDefault(s => s.Id == PateintId);
+                string Body = string.Format(ConfigurationManager.AppSettings["Body"].ToString(),
+                    pateint.AspNetUser1.UserName, pateint.UserName);
+
+                var client = new SmtpClient(ConfigurationManager.AppSettings["Host"].ToString(),
+                    int.Parse(ConfigurationManager.AppSettings["Port"].ToString()))
+                {
+                    Credentials = new NetworkCredential(ConfigurationManager.AppSettings["Mail"].ToString(),
+                    ConfigurationManager.AppSettings["Password"].ToString()),
+                    EnableSsl = true
+                };
+                client.Send(ConfigurationManager.AppSettings["Mail"].ToString(),
+                    pateint.AspNetUser1.Email, ConfigurationManager.AppSettings["Password"].ToString(),
+                    Body);
+            }
             return Ok("Done");
         }
 

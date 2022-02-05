@@ -10,7 +10,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {withNavigation} from 'react-navigation';
-import {AsyncStorage} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { PermissionsAndroid } from 'react-native';
 
 class SensorsConnectionValidator extends Component {

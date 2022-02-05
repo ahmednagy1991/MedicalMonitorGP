@@ -21,6 +21,8 @@ namespace MedicalAdminWebApp.DBContext
         public Nullable<double> Longitude { get; set; }
         public Nullable<double> HR { get; set; }
         public Nullable<double> Temprature { get; set; }
+        public Nullable<int> SPO2 { get; set; }
+        public Nullable<double> BS { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
     }

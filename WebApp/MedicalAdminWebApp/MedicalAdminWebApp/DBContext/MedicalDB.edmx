@@ -69,6 +69,8 @@
           <Property Name="Longitude" Type="float" />
           <Property Name="HR" Type="float" />
           <Property Name="Temprature" Type="float" />
+          <Property Name="SPO2" Type="int" />
+          <Property Name="BS" Type="float" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -290,6 +292,8 @@
           <Property Name="Longitude" Type="Double" />
           <Property Name="HR" Type="Double" />
           <Property Name="Temprature" Type="Double" />
+          <Property Name="SPO2" Type="Int32" />
+          <Property Name="BS" Type="Double" />
           <NavigationProperty Name="AspNetUser" Relationship="MedicalMonitoringDBModel.FK_SensorsReadings_AspNetUsers" FromRole="SensorsReading" ToRole="AspNetUser" />
         </EntityType>
         <EntityType Name="sysdiagram">
@@ -414,6 +418,8 @@
           <EntitySetMapping Name="SensorsReadings">
             <EntityTypeMapping TypeName="MedicalMonitoringDBModel.SensorsReading">
               <MappingFragment StoreEntitySet="SensorsReadings">
+                <ScalarProperty Name="BS" ColumnName="BS" />
+                <ScalarProperty Name="SPO2" ColumnName="SPO2" />
                 <ScalarProperty Name="Temprature" ColumnName="Temprature" />
                 <ScalarProperty Name="HR" ColumnName="HR" />
                 <ScalarProperty Name="Longitude" ColumnName="Longitude" />
